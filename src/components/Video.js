@@ -3,6 +3,7 @@ import {CometChatUserListScreen} from "../CometChat";
 import  {CometChat} from '@cometchat-pro/chat'
 import { useHistory } from 'react-router'
 
+
 export const  Video = () => {
   const history = useHistory()
 
@@ -21,7 +22,7 @@ React.useEffect(()=>{
 
     return(
       <div>
-          <button className= "button" onClick={logout}>logout</button>
+          <button className= "btn btn-width btn-medium btn-primary" onClick={logout}>logout</button>
           <CometChatUserListScreen/>
       </div>
       
