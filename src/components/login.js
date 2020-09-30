@@ -1,13 +1,52 @@
 
 import React  from 'react';
-import { AuthContext } from '../context/authcontext';
 import {Container, Row, Col, Form, Button} from 'react-bootstrap'
 import Image from '../background.png'
+import {API_KEY} from '../constant/constant'
+import  {CometChat} from '@cometchat-pro/chat'
+import { useHistory } from 'react-router'
 
 export const Login = () => {
-    const {login} = React.useContext(AuthContext)
     const [username, setUsername] = React.useState('')
     const [isSubmitting, setIsSubmitting] = React.useState(false)
+    const history = useHistory()
+
+
+const login = async (username) => {
+        const UID = username
+var user = new CometChat.User(UID);
+user.setName(username);
+
+    if(username){
+      CometChat.createUser(user, API_KEY).then(
+        user => {
+            console.log("user created", user);
+            CometChat.login(UID,API_KEY).then(
+                data => {
+                    history.push('/video')
+                },
+                error => {
+                  console.log("Login failed with exception:", { error });    
+                }
+              );
+
+        },error => {
+            CometChat.login(UID,API_KEY).then(
+                data => {
+                  history.push('/video')
+                },
+                error => {
+                  console.log("Login failed with exception:", { error });    
+                }
+              );
+        }
+    )
+      
+    }else{
+      history.push('/video')
+    }
+      
+}
 
     const formsubmit = async (e) =>{
         e.preventDefault()
